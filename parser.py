@@ -19,6 +19,7 @@ def parse_line(line:str) -> dict | None:
     data = match.groupdict()
 
     request_str = data.get('request','')
+    user_agent_str = data.get('user_agent','')
     request_prts = request_str.split(' ')
 
     if len(request_prts) == 3:
@@ -30,6 +31,7 @@ def parse_line(line:str) -> dict | None:
         data["method"] = None
         data["path"] = request_str
         data["protocol"] = None 
+        
 
     try:
         data["status"] = int(data["status"])
@@ -38,9 +40,15 @@ def parse_line(line:str) -> dict | None:
     except ValueError:
         pass
 
+    if(user_agent_str != ''):
+        data['user_agent'] = user_agent_str
+
     return data
+        
 
-
+if __name__ == "__main__":
+    log = 'domenkazadarmenko.eu 172.70.230.50 - - [06/Nov/2026:18:56:35 +0100] "GET /wp-login.php HTTP/1.1" 509 2534 "-" "Mozilla/5.0" 0.000 - - - (CU)'
+    print(parse_line(log))
 
 
 
