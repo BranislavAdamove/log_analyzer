@@ -14,6 +14,7 @@ LOG_PATTERN = re.compile(
 
 
 def parse_line(line:str) -> dict[str,any] | None:
+    """Parse a single custom Apache access log line into a structured dictionary."""
     line = line.strip()
 
     if not line:
